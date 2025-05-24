@@ -41,8 +41,6 @@ async def start(client, message):
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     if len(message.command) != 2:
         buttons = [[
-            InlineKeyboardButton('🎉 𝗔𝗱𝗱 𝗠𝗲 𝗧𝗼 𝗬𝗼𝘂𝗿 𝗚𝗿𝗼𝘂𝗽𝘀 🎉', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
-            ],[
             InlineKeyboardButton('⚙️ 𝑳𝒂𝒕𝒆𝒔𝒕 𝒎𝒐𝒗𝒊𝒆𝒔 𝒓𝒆𝒍𝒆𝒂𝒔𝒆 ⚙️', url='https://t.me/+dDtZwAhMiJQzZGY0')
             ],[
             InlineKeyboardButton('⚓️ 𝑶𝑻𝑻  𝑰𝑵𝑺𝑻𝑨𝑮𝑹𝑨𝑴 𝑪𝑯𝑨𝑵𝑵𝑬𝑳 ⚓️ ', url='https://t.me/+P_ni_6Ji_DAyMzQ1')
@@ -92,8 +90,6 @@ async def start(client, message):
         return
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [[
-            InlineKeyboardButton('🎉 𝗔𝗱𝗱 𝗠𝗲 𝗧𝗼 𝗬𝗼𝘂𝗿 𝗚𝗿𝗼𝘂𝗽𝘀 🎉', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
-            ],[
             InlineKeyboardButton('⚙️ 𝑳𝒂𝒕𝒆𝒔𝒕 𝒎𝒐𝒗𝒊𝒆𝒔 𝒓𝒆𝒍𝒆𝒂𝒔𝒆 ⚙️', url='https://t.me/+dDtZwAhMiJQzZGY0')
             ],[
             InlineKeyboardButton('⚓️ 𝑶𝑻𝑻  𝑰𝑵𝑺𝑻𝑨𝑮𝑹𝑨𝑴 𝑪𝑯𝑨𝑵𝑵𝑬𝑳 ⚓️ ', url='https://t.me/+P_ni_6Ji_DAyMzQ1')

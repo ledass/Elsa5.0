@@ -34,12 +34,6 @@ SPELL_CHECK = {}
 
 @Client.on_message(filters.group | filters.private & filters.text & filters.incoming) 
 async def give_filter(client, message):
-    await asyncio.sleep(5)
-    try:
-        await message.delete()
-    except Exception as e:
-        logger.exception("Failed to delete message:", e)
-
     k = await manual_filters(client, message)
     if k == False:
         await auto_filter(client, message)
@@ -676,10 +670,8 @@ async def auto_filter(client, msg, spoll=False):
             search = message.text
             files, offset, total_results = await get_search_results(search.lower(), offset=0, filter=True)
             if not files:
-                if settings["spell_check"]:
-                    return await advantage_spell_chok(client, msg)
-                else:
-                    return
+                await msg.delete()
+                return
         else:
             return
     else:
@@ -820,7 +812,6 @@ async def auto_filter(client, msg, spoll=False):
     if spoll:
         await msg.message.delete()
 
-#SPELL CHECK RE EDITED BY GOUTHAMSER
 async def advantage_spell_chok(client, msg):
     mv_id = msg.id
     mv_rqst = msg.text

@@ -34,8 +34,6 @@ pyroutils.MIN_CHANNEL_ID = -100999999999999
 
 from plugins.webcode import bot_run
 
-PORT_CODE = environ.get("PORT", "8080")
-
 async def keep_alive():
     """Send a request every 111 seconds to keep the bot alive (if required)."""
     async with aiohttp.ClientSession() as session:
@@ -45,7 +43,7 @@ async def keep_alive():
                 logging.info("Sent keep-alive request.")
             except Exception as e:
                 logging.error(f"Keep-alive request failed: {e}")
-            await asyncio.sleep(111)
+            await asyncio.sleep(45)
 
 class Bot(Client):
 
@@ -55,18 +53,11 @@ class Bot(Client):
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
-            workers=50,
+            workers=200,
             plugins={"root": "plugins"},
-            sleep_threshold=5,
+            sleep_threshold=20,
         )
 
-    async def kulasthree(self):
-        """hello"""
-        while True:
-            await asyncio.sleep(24 * 60 * 60)  # Wait for 24 hours
-            logging.info("🔄 Bot is restarting")
-            await self.send_message(chat_id=LOG_CHANNEL, text="🔄 Bot is restarting ...")
-            os.execl(sys.executable, sys.executable, *sys.argv)  
             
     async def start(self, **kwargs):
         b_users, b_chats = await db.get_banned()
@@ -90,16 +81,12 @@ class Bot(Client):
         time = now.strftime("%H:%M:%S %p")
         await self.send_message(chat_id=LOG_CHANNEL, text=script.RESTART_GC_TXT.format(today, time))
 
-        # Start restart task
-        asyncio.create_task(self.kulasthree())
-
-        # Start keep-alive task
         asyncio.create_task(keep_alive())
 
         client = webserver.AppRunner(await bot_run())
         await client.setup()
         bind_address = "0.0.0.0"
-        await webserver.TCPSite(client, bind_address, PORT_CODE).start()
+        await webserver.TCPSite(client, bind_address, 8080).start()
 
     async def stop(self, *args):
         await super().stop()
